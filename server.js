@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'dev',
     password : '1234',
-    database: 'test'
+    database: 'words'
 });
 
 const port = process.env.port || 3000;
@@ -25,18 +25,23 @@ connection.connect(
     }
 );
 
-app.get("/", (req, res) => {
+app.get("/getword", (req, res) => {
 
-    connection.query("select * from words", (error, results, fields) =>{
+    var word;
+
+    connection.query("SELECT WORD FROM DEFINITION ORDER BY RAND() LIMIT 0,1 ", (error, results, fields) =>{
         if(error){
             console.log("Can't process query");
             return;
         }
 
         console.log(results);
-        console.log(results[0].name);
+        word = {name: results[0].WORD};
+        console.log(word);
+        res.json(word);
     });
-    res.send("Hello World");
+
+    
 });
 
 app.listen(port, ()=>{
