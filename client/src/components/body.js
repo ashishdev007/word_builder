@@ -1,6 +1,6 @@
 import React from "react";
 import Word from "./word.js";
-import OptionBox from "./optionBox.jsx";
+import Options from "./options.jsx";
 import "./body.css";
 
 class Body extends React.Component{
@@ -11,11 +11,7 @@ class Body extends React.Component{
                 <div className="container">
                     <Word></Word>
 
-                    <div id="options">
-                        <OptionBox></OptionBox>
-                        <OptionBox></OptionBox>
-                        <OptionBox></OptionBox>
-                    </div>
+                    <Options></Options>
 
                     <button id = "next">Next</button>
                 </div>
