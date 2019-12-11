@@ -2,12 +2,14 @@ import React from 'react';
 
 class Word extends React.Component{
 
-    state = {word: ""};
+    state = {word: "", id: -1};
 
     componentDidMount(){
         fetch("/getword")
         .then(res => res.json())
-        .then(word => this.setState({word: word.name.toUpperCase()}));
+        .then(word => this.setState({word: word.name.toUpperCase(), id: word.id}, () => {
+            this.props.wordAcuired(this.state.id);
+        }));
     }
 
     render(){

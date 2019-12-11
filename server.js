@@ -29,14 +29,14 @@ app.get("/getword", (req, res) => {
 
     var word;
 
-    connection.query("SELECT WORD FROM DEFINITION ORDER BY RAND() LIMIT 0,1 ", (error, results, fields) =>{
+    connection.query("SELECT WORD, ID FROM MEANING ORDER BY RAND() LIMIT 0,1 ", (error, results, fields) =>{
         if(error){
             console.log("Can't process query");
             return;
         }
 
         console.log(results);
-        word = {name: results[0].WORD};
+        word = {name: results[0].WORD, id: results[0].ID};
         console.log(word);
         res.json(word);
     });
