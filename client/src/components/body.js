@@ -5,19 +5,26 @@ import "./body.css";
 
 class Body extends React.Component{
 
-    state = {wordId: -1};
+    state = {word: "", wordId: -1};
 
-    wordAcuired = (id) =>{
-        this.setState({wordId: id}, () => {
-            console.log("word id: " + this.state.wordId);
-        });        
-    };
+    getWord = () => {
+
+        fetch("/getword")
+        .then(res => res.json())
+        .then(word => this.setState({word: word.name.toUpperCase(), wordId: word.id}, () => {
+            console.log(this.state);
+        }));
+    }
+
+    componentDidMount(){
+        this.getWord();
+    }
 
     render(){
         return(
             <div className="mainContainer">
                 <div className="container">
-                    <Word wordAcuired = {this.wordAcuired}></Word>
+                    <Word word = {this.state.word}></Word>
 
                     <Options wordId = {this.state.wordId}></Options>
 
