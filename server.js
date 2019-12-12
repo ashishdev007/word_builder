@@ -12,6 +12,20 @@ var connection = mysql.createConnection({
 
 const port = process.env.port || 3000;
 
+var randomGenerator = (done, length) => {
+    var flag = false;
+    var no;
+
+    while(!flag){
+        no = Math.floor(Math.random() * length);
+
+        if(!done.has(no)){
+            flag = true;
+        }
+    }
+    return no;
+}
+
 connection.connect(
     (err) =>{
         if (err){
@@ -25,23 +39,70 @@ connection.connect(
     }
 );
 
-app.get("/getword", (req, res) => {
+processQuery = (query) =>{
+    
+    var promise = new Promise((resolve, reject) => {
+        connection.query(query, (error, results, fields) => {
+            if(error){
+                console.log("Can't process '" + query +"'");
+                throw error;
+            }
+    
+            resolve(results);
+        })
+    });
+
+    return promise;
+
+}
+
+app.get("/getword", async (req, res) => {
 
     var word;
 
-    connection.query("SELECT WORD, ID FROM MEANING ORDER BY RAND() LIMIT 0,1 ", (error, results, fields) =>{
-        if(error){
-            console.log("Can't process query");
-            return;
+    try{
+        results = await processQuery("SELECT WORD, ID FROM MEANING ORDER BY RAND() LIMIT 0,1 ");
+        word = {name: results[0].WORD, id: results[0].ID};
+        res.json(word);
+
+    }catch(e){
+        console.log("Promise rejected");
+    }
+    
+});
+
+app.get("/abc/:id", async (req,res) =>{
+    console.log(req.params.id);
+})
+
+app.get("/getdefs/:id", async(req, res) => {
+    var id = req.params.id;
+    var defs =["", "", ""];
+    var done = new Set();
+
+    try{
+
+        correct = await processQuery("select DEFINITION from MEANING where ID = " + id);
+
+        no = randomGenerator(done,3);
+        done.add(no);
+        defs[no] = correct[0].DEFINITION;
+
+        options = await processQuery("SELECT DEFINITION FROM MEANING WHERE ID != " + id + " ORDER BY RAND() LIMIT 2");
+        console.log(options);
+
+        for (let i = 0; i < 2; i++) {
+            no = randomGenerator(done,3);
+            done.add(no);
+            defs[no] = options[i].DEFINITION;
+            
         }
 
-        console.log(results);
-        word = {name: results[0].WORD, id: results[0].ID};
-        console.log(word);
-        res.json(word);
-    });
+        res.json(defs);
+    }catch(e){
+        console.log("Promise rejected");
+    }
 
-    
 });
 
 app.listen(port, ()=>{

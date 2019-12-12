@@ -10,8 +10,7 @@ class Body extends React.Component{
     wordAcuired = (id) =>{
         this.setState({wordId: id}, () => {
             console.log("word id: " + this.state.wordId);
-        });
-        
+        });        
     };
 
     render(){
@@ -20,7 +19,7 @@ class Body extends React.Component{
                 <div className="container">
                     <Word wordAcuired = {this.wordAcuired}></Word>
 
-                    <Options></Options>
+                    <Options wordId = {this.state.wordId}></Options>
 
                     <button id = "next">Next</button>
                 </div>
