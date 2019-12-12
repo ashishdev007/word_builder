@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
     database: 'words'
 });
 
-const port = process.env.port || 3000;
+const port = process.env.port || 5000;
 
 var randomGenerator = (done, length) => {
     var flag = false;
