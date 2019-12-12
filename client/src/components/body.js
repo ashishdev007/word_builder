@@ -4,35 +4,37 @@ import Options from "./options.jsx";
 import Next from "./next.jsx";
 import "./body.css";
 
-class Body extends React.Component{
+class Body extends React.Component {
+  state = { word: "", wordId: -1 };
 
-    state = {word: "", wordId: -1};
+  getWord = () => {
+    fetch("/getword")
+      .then(res => res.json())
+      .then(word =>
+        this.setState(
+          { word: word.name.toUpperCase(), wordId: word.id },
+          () => {}
+        )
+      );
+  };
 
-    getWord = () => {
+  componentDidMount() {
+    this.getWord();
+  }
 
-        fetch("/getword")
-        .then(res => res.json())
-        .then(word => this.setState({word: word.name.toUpperCase(), wordId: word.id}, () => {
-        }));
-    }
+  render() {
+    return (
+      <div className="mainContainer">
+        <div className="container">
+          <Word word={this.state.word}></Word>
 
-    componentDidMount(){
-        this.getWord();
-    }
+          <Options wordId={this.state.wordId}></Options>
 
-    render(){
-        return(
-            <div className="mainContainer">
-                <div className="container">
-                    <Word word = {this.state.word}></Word>
-
-                    <Options wordId = {this.state.wordId}></Options>
-
-                    <Next next = {this.getWord}></Next>
-                </div>
-            </div>
-        );
-    }
+          <Next next={this.getWord}></Next>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Body;
