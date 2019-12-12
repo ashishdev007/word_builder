@@ -14,7 +14,6 @@ class options extends React.Component{
                 fetch(`/getdefs/${id}`).then(res => res.json())
                 .then(results => {
                     this.setState({id: id, option1: results.defs[0], option2: results.defs[1], option3: results.defs[2], correct: results.correct});
-                    console.log(this.state);
                 });
             }
     
@@ -23,7 +22,6 @@ class options extends React.Component{
         this.showVerdict = (element, correct) => {
             element.style.color = "white";
             if(correct){
-                console.log(element.style);
                 element.style.background = "green";
             }
             else{

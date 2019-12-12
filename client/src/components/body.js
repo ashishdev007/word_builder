@@ -13,7 +13,6 @@ class Body extends React.Component{
         fetch("/getword")
         .then(res => res.json())
         .then(word => this.setState({word: word.name.toUpperCase(), wordId: word.id}, () => {
-            console.log(this.state);
         }));
     }
 
