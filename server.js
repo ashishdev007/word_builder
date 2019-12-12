@@ -77,7 +77,7 @@ app.get("/abc/:id", async (req,res) =>{
 
 app.get("/getdefs/:id", async(req, res) => {
     var id = req.params.id;
-    var defs =["", "", ""];
+    var results = {defs :["", "", ""], correct : -1};
     var done = new Set();
 
     try{
@@ -86,19 +86,21 @@ app.get("/getdefs/:id", async(req, res) => {
 
         no = randomGenerator(done,3);
         done.add(no);
-        defs[no] = correct[0].DEFINITION;
+        console.log(no +1);
+
+        results.defs[no] = correct[0].DEFINITION;
+        results.correct = no + 1;
 
         options = await processQuery("SELECT DEFINITION FROM MEANING WHERE ID != " + id + " ORDER BY RAND() LIMIT 2");
-        console.log(options);
 
         for (let i = 0; i < 2; i++) {
             no = randomGenerator(done,3);
             done.add(no);
-            defs[no] = options[i].DEFINITION;
+            results.defs[no] = options[i].DEFINITION;
             
         }
 
-        res.json(defs);
+        res.json(results);
     }catch(e){
         console.log("Promise rejected");
     }

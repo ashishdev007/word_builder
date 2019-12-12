@@ -12,8 +12,8 @@ class options extends React.Component{
 
             if(id !== -1){
                 fetch(`/getdefs/${id}`).then(res => res.json())
-                .then(defs => {
-                    this.setState({id: id, option1: defs[0], option2: defs[1], option3: defs[2]});
+                .then(results => {
+                    this.setState({id: id, option1: results.defs[0], option2: results.defs[1], option3: results.defs[2], correct: results.correct});
                     console.log(this.state);
                 });
             }

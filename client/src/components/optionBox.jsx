@@ -15,8 +15,6 @@ class Option extends React.Component{
 
     }
 
-    
-
     render(){
         return(
             <div class="optionBox" onClick={this.callCheck} ref={this.divRef}>
