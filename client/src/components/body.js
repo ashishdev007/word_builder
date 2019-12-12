@@ -1,6 +1,7 @@
 import React from "react";
 import Word from "./word.js";
 import Options from "./options.jsx";
+import Next from "./next.jsx";
 import "./body.css";
 
 class Body extends React.Component{
@@ -28,7 +29,7 @@ class Body extends React.Component{
 
                     <Options wordId = {this.state.wordId}></Options>
 
-                    <button id = "next">Next</button>
+                    <Next next = {this.getWord}></Next>
                 </div>
             </div>
         );
