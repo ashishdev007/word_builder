@@ -4,6 +4,7 @@ import "../body.css";
 
 import { getQuestion, newSelection, resetSelection } from "../../actions";
 import Option from "./optionBox.jsx";
+import LoaderModal from "../LoaderModal.jsx";
 
 class Mcq extends Component {
     componentDidMount() {
@@ -17,14 +18,6 @@ class Mcq extends Component {
 
     renderOptions = () => {
         var { options } = this.props.question;
-
-        if (!options) {
-            return (
-                <div className="ui active dimmer">
-                    <div className="ui loader"></div>
-                </div>
-            );
-        }
 
         return options.map(option => {
             var { question } = this.props;
@@ -40,6 +33,10 @@ class Mcq extends Component {
     };
 
     render() {
+        if (!this.props.question.word) {
+            return <LoaderModal />;
+        }
+
         return (
             <div className="mainContainer">
                 <div className="container segment">
