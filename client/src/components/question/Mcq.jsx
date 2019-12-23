@@ -13,6 +13,14 @@ class Mcq extends Component {
         this.props.getQuestion();
     };
 
+    checkanswer = (event, option) => {
+        if (option.no === this.props.question.answer) {
+            event.currentTarget.style.background = "green";
+        } else {
+            event.currentTarget.style.background = "red";
+        }
+    };
+
     renderOptions = () => {
         var { options } = this.props.question;
 
@@ -26,7 +34,11 @@ class Mcq extends Component {
 
         return options.map(option => {
             return (
-                <div className="optionBox" key={option.no}>
+                <div
+                    className="optionBox"
+                    key={option.no}
+                    onClick={event => this.checkanswer(event, option)}
+                >
                     {option.text}
                 </div>
             );
