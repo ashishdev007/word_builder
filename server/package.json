@@ -1,18 +1,22 @@
 {
-  "name": "word_builder",
-  "version": "1.0.0",
-  "description": "This a web app that helps you build your vocabulary",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Ashish Dev",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.1"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "mysql": "^2.17.1"
-  }
+    "name": "word_builder",
+    "version": "1.0.0",
+    "description": "This a web app that helps you build your vocabulary",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "server": "nodemon server.js",
+        "client": "npm start --prefix ../client",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "author": "Ashish Dev",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.1"
+    },
+    "dependencies": {
+        "concurrently": "^5.0.2",
+        "express": "^4.17.1",
+        "mysql": "^2.17.1"
+    }
 }
