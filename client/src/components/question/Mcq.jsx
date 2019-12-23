@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "../body.css";
 
 import { getQuestion, newSelection, resetSelection } from "../../actions";
+import Option from "./optionBox.jsx";
 
 class Mcq extends Component {
     componentDidMount() {
@@ -12,11 +13,6 @@ class Mcq extends Component {
     getNewWord = () => {
         this.props.getQuestion();
         this.props.resetSelection();
-    };
-    clickHandle = option => {
-        if (!this.props.selection) {
-            this.props.newSelection(option);
-        }
     };
 
     renderOptions = () => {
@@ -31,25 +27,14 @@ class Mcq extends Component {
         }
 
         return options.map(option => {
-            var { selection, question } = this.props;
-
-            var style = { backgroundColor: "white" };
-            if (selection && selection.no === option.no) {
-                if (option.no === question.answer) {
-                    style = { backgroundColor: "green" };
-                } else {
-                    style = { backgroundColor: "red" };
-                }
-            }
+            var { question } = this.props;
+            var isAnswer = question.answer === option.no;
             return (
-                <div
-                    className="optionBox"
-                    key={option.no}
-                    onClick={() => this.clickHandle(option)}
-                    style={style}
-                >
-                    {option.text}
-                </div>
+                <Option
+                    answer={question.answer}
+                    isAnswer={isAnswer}
+                    option={option}
+                />
             );
         });
     };
@@ -72,8 +57,8 @@ class Mcq extends Component {
 }
 
 const mapStateToProps = state => {
-    var { question, selection } = state;
-    return { question, selection };
+    var { question } = state;
+    return { question };
 };
 
 export default connect(mapStateToProps, {
