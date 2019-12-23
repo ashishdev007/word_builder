@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../body.css";
 
-import { getQuestion } from "../../actions";
+import { getQuestion, newSelection, resetSelection } from "../../actions";
 
 class Mcq extends Component {
     componentDidMount() {
@@ -11,13 +11,11 @@ class Mcq extends Component {
 
     getNewWord = () => {
         this.props.getQuestion();
+        this.props.resetSelection();
     };
-
-    checkanswer = (event, option) => {
-        if (option.no === this.props.question.answer) {
-            event.currentTarget.style.background = "green";
-        } else {
-            event.currentTarget.style.background = "red";
+    clickHandle = option => {
+        if (!this.props.selection) {
+            this.props.newSelection(option);
         }
     };
 
@@ -33,11 +31,22 @@ class Mcq extends Component {
         }
 
         return options.map(option => {
+            var { selection, question } = this.props;
+
+            var style = { backgroundColor: "white" };
+            if (selection && selection.no === option.no) {
+                if (option.no === question.answer) {
+                    style = { backgroundColor: "green" };
+                } else {
+                    style = { backgroundColor: "red" };
+                }
+            }
             return (
                 <div
                     className="optionBox"
                     key={option.no}
-                    onClick={event => this.checkanswer(event, option)}
+                    onClick={() => this.clickHandle(option)}
+                    style={style}
                 >
                     {option.text}
                 </div>
@@ -63,7 +72,12 @@ class Mcq extends Component {
 }
 
 const mapStateToProps = state => {
-    return { question: state.question };
+    var { question, selection } = state;
+    return { question, selection };
 };
 
-export default connect(mapStateToProps, { getQuestion })(Mcq);
+export default connect(mapStateToProps, {
+    getQuestion,
+    newSelection,
+    resetSelection
+})(Mcq);
