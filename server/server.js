@@ -60,6 +60,47 @@ processQuery = query => {
     return promise;
 };
 
+app.get("/question", async (req, res) => {
+    var question = {};
+
+    try {
+        word = await processQuery(
+            "SELECT WORD, ID, DEFINITION FROM MEANING ORDER BY RAND() LIMIT 0,1 "
+        );
+
+        question = {
+            ...question,
+            ...{ word: word[0].WORD, id: word[0].ID }
+        };
+
+        definition = word[0].DEFINITION;
+
+        optionsList = [{}, {}, {}];
+        no = randomGenerator(new Set(), 3);
+        question.answer = no;
+        optionsList[no] = { id: no, text: definition };
+
+        options = await processQuery(
+            "SELECT DEFINITION FROM MEANING WHERE ID != " +
+                question.id +
+                " ORDER BY RAND() LIMIT 3"
+        );
+
+        for (let i = 0; i < 3; i++) {
+            if (i !== no) {
+                optionsList[i] = { no: i, text: options[i].DEFINITION };
+            }
+        }
+
+        question.options = optionsList;
+
+        res.json(question);
+    } catch (e) {
+        console.log("Can't get a question");
+        console.log(e);
+    }
+});
+
 app.get("/getword", async (req, res) => {
     var word;
 
