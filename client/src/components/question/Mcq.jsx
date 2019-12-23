@@ -2,24 +2,56 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../body.css";
 
+import { getQuestion } from "../../actions";
+
 class Mcq extends Component {
+    componentDidMount() {
+        this.getNewWord();
+    }
+
+    getNewWord = () => {
+        this.props.getQuestion();
+    };
+
+    renderOptions = () => {
+        var { options } = this.props.question;
+
+        if (!options) {
+            return (
+                <div className="ui active dimmer">
+                    <div className="ui loader"></div>
+                </div>
+            );
+        }
+
+        return options.map(option => {
+            return (
+                <div className="optionBox" key={option.no}>
+                    {option.text}
+                </div>
+            );
+        });
+    };
+
     render() {
         return (
             <div className="mainContainer">
-                <div className="container">
+                <div className="container segment">
                     <div id="word">
-                        <h1>WORD</h1>
+                        <h1>{this.props.question.word}</h1>
                     </div>
-                    <div id="options">
-                        <div class="optionBox">Option</div>
-                        <div class="optionBox">Option</div>
-                        <div class="optionBox">Option</div>
-                    </div>
-                    <button id="next">Next</button>
+                    <div id="options">{this.renderOptions()}</div>
+                    <button id="next" onClick={this.getNewWord}>
+                        Next
+                    </button>
                 </div>
             </div>
         );
     }
 }
 
-export default connect(null)(Mcq);
+const mapStateToProps = state => {
+    return { question: state.question };
+};
+
+export default connect(mapStateToProps, { getQuestion })(Mcq);

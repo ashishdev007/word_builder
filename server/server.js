@@ -78,7 +78,7 @@ app.get("/question", async (req, res) => {
         optionsList = [{}, {}, {}];
         no = randomGenerator(new Set(), 3);
         question.answer = no;
-        optionsList[no] = { id: no, text: definition };
+        optionsList[no] = { no: no, text: definition };
 
         options = await processQuery(
             "SELECT DEFINITION FROM MEANING WHERE ID != " +
