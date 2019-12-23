@@ -3,12 +3,13 @@ import { Route, Router } from "react-router-dom";
 import history from "../history";
 
 import Body from "./body";
+import Mcq from "./question/Mcq.jsx";
 
 function App() {
     return (
         <div>
             <Router history={history}>
-                <Route path="/" component={Body} />
+                <Route path="/" component={Mcq} />
             </Router>
         </div>
     );
