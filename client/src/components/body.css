@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
     margin: 0;
 }
@@ -61,4 +61,37 @@ h1 {
 
 #next {
     margin-top: 2%;
+} */
+
+/*-------------------------------*/
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&display=swap");
+
+html > body {
+    font-size: 17px;
+}
+
+.ui.container {
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+}
+
+.ui.segment.option {
+    min-height: 5vh;
+    font-size: 1em;
+
+    transition: background-color 0.6s;
+    -webkit-transition: background-color 0.6s;
+    -moz-transition: background-color 0.6s;
+}
+
+#word {
+    text-align: center;
+    font-family: "Roboto Slab";
+    font-weight: 500;
+    font-size: 2.5em;
+}
+
+.optionBox {
+    margin: 3vh 0;
 }

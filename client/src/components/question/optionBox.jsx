@@ -21,7 +21,7 @@ class Option extends React.Component {
         } else if (selection && isAnswer && selection.no !== option.no) {
             return { backgroundColor: "green" };
         }
-        return { backgroundColor: "azure" };
+        return { backgroundColor: "white" };
     };
 
     renderOption = () => {
@@ -29,7 +29,7 @@ class Option extends React.Component {
         var style = this.getStyle();
         return (
             <div
-                className="optionBox"
+                className="ui segment option"
                 key={option.no}
                 onClick={evnt => this.clickHandle(option, evnt)}
                 style={style}

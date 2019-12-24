@@ -38,15 +38,28 @@ class Mcq extends Component {
         }
 
         return (
-            <div className="mainContainer">
-                <div className="container segment">
-                    <div id="word">
-                        <h1>{this.props.question.word}</h1>
+            <div className="ui container">
+                <div className="ui grid">
+                    <div class="ui row">
+                        <div class="two wide column center aligned"></div>
+                        <div class="twelve wide column left aligned">
+                            <h3 id="word" class="ui huge header test">
+                                {this.props.question.word}
+                            </h3>
+                            <div class="ui divider"></div>
+
+                            <div className="optionBox">
+                                {this.renderOptions()}
+                            </div>
+                            <button
+                                class="ui primary large button"
+                                onClick={this.getNewWord}
+                            >
+                                Next
+                            </button>
+                        </div>
+                        <div class="two wide column center aligned"></div>
                     </div>
-                    <div id="options">{this.renderOptions()}</div>
-                    <button id="next" onClick={this.getNewWord}>
-                        Next
-                    </button>
                 </div>
             </div>
         );
