@@ -24,6 +24,7 @@ class Mcq extends Component {
             var isAnswer = question.answer === option.no;
             return (
                 <Option
+                    key={option.no}
                     answer={question.answer}
                     isAnswer={isAnswer}
                     option={option}
@@ -40,25 +41,25 @@ class Mcq extends Component {
         return (
             <div className="ui container">
                 <div className="ui grid">
-                    <div class="ui row">
-                        <div class="two wide column center aligned"></div>
-                        <div class="twelve wide column left aligned">
-                            <h3 id="word" class="ui huge header test">
+                    <div className="ui row">
+                        <div className="two wide column center aligned"></div>
+                        <div className="twelve wide column left aligned">
+                            <h3 id="word" className="ui huge header test">
                                 {this.props.question.word}
                             </h3>
-                            <div class="ui divider"></div>
+                            <div className="ui divider"></div>
 
                             <div className="optionBox">
                                 {this.renderOptions()}
                             </div>
                             <button
-                                class="ui primary large button"
+                                className="ui primary large button"
                                 onClick={this.getNewWord}
                             >
                                 Next
                             </button>
                         </div>
-                        <div class="two wide column center aligned"></div>
+                        <div className="two wide column center aligned"></div>
                     </div>
                 </div>
             </div>
