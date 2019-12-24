@@ -3,18 +3,14 @@ import { connect } from "react-redux";
 import "../body.css";
 
 import { getQuestion, newSelection, resetSelection } from "../../actions";
+import NextButton from "./NextButton.jsx";
 import Option from "./optionBox.jsx";
 import LoaderModal from "../LoaderModal.jsx";
 
 class Mcq extends Component {
     componentDidMount() {
-        this.getNewWord();
-    }
-
-    getNewWord = () => {
         this.props.getQuestion();
-        this.props.resetSelection();
-    };
+    }
 
     renderOptions = () => {
         var { options } = this.props.question;
@@ -52,12 +48,7 @@ class Mcq extends Component {
                             <div className="optionBox">
                                 {this.renderOptions()}
                             </div>
-                            <button
-                                className="ui primary large button"
-                                onClick={this.getNewWord}
-                            >
-                                Next
-                            </button>
+                            <NextButton />
                         </div>
                         <div className="two wide column center aligned"></div>
                     </div>
